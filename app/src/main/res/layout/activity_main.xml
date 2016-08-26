@@ -19,24 +19,4 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="187dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Starting Time"
-        android:id="@+id/startingTime"
-        android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/button"
-        android:layout_marginEnd="35dp"
-        android:layout_marginTop="49dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Ending Time"
-        android:id="@+id/endingTime"
-        android:layout_below="@+id/startingTime"
-        android:layout_alignStart="@+id/startingTime"
-        android:layout_marginTop="31dp" />
 </RelativeLayout>

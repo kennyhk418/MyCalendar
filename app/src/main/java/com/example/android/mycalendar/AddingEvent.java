@@ -18,15 +18,17 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class AddingEvent extends AppCompatActivity {
-    final Calendar calendar = Calendar.getInstance();
+    Calendar calendar = Calendar.getInstance();
     Date currentTime, sTime, eTime;
-    Button okButton, cancelButton;
+    Button okButton, clearButton, cancelButton;
     TextView currentDate, startingTime, endingTime, activity;
     int sYear, sMonth, sDay;
     int sHour, sMin;
     int eHour, eMin;
     boolean isDatePassed = false;
     DatePickerDialog datePicker;
+    final SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa");
+    final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, EEE");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,27 +39,13 @@ public class AddingEvent extends AppCompatActivity {
         startingTime = (TextView) findViewById(R.id.startingTime);
         endingTime = (TextView) findViewById(R.id.endingTime);
         okButton = (Button) findViewById(R.id.submit);
+        clearButton = (Button) findViewById(R.id.clear);
+        cancelButton = (Button) findViewById(R.id.cancel);
 
-        currentTime = calendar.getTime();
-        sTime = currentTime;
-        eTime = currentTime;
-        sYear = calendar.get(Calendar.YEAR);
-        sMonth = calendar.get(Calendar.MONTH);
-        sDay = calendar.get(Calendar.DAY_OF_MONTH);
-        sHour = calendar.get(Calendar.HOUR_OF_DAY);
-        sMin = calendar.get(Calendar.MINUTE);
-        eHour = sHour;
-        eMin = sMin;
+        initializeVariables(); // initialize all the variables when it first creates
 
-        final SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa");
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, EEE");
-
-        //Initialize TextView values
-        currentDate.setText(dateFormat.format(currentTime));
-        startingTime.setText(timeFormat.format(currentTime));
-        endingTime.setText(timeFormat.format(currentTime));
-
-
+        //Click on the "Current Date" TextView to choose the desired date of an event
+        //Default values = current date
         currentDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +66,8 @@ public class AddingEvent extends AppCompatActivity {
             }
         });
 
+        //Click on the "Starting Time" TextView to choose the Starting Time of an event
+        //Default values = current time
         startingTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,6 +87,8 @@ public class AddingEvent extends AppCompatActivity {
             }
         });
 
+        //Click on the "Ending Time" TextView to choose the Ending Time of an event
+        //Default values = current time
         endingTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,6 +108,8 @@ public class AddingEvent extends AppCompatActivity {
             }
         });
 
+        //Click OK button to submit the event back to the calendar
+        //It will check if the starting time is equal or after ending time. if so, make a flag
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,5 +126,38 @@ public class AddingEvent extends AppCompatActivity {
                 }
             }
         });
+
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initializeVariables();
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    //Method to initialize all the textView and variables to the current date and time
+    public void initializeVariables(){
+        calendar = Calendar.getInstance();
+        currentTime = calendar.getTime();
+        sTime = currentTime;
+        eTime = currentTime;
+        sYear = calendar.get(Calendar.YEAR);
+        sMonth = calendar.get(Calendar.MONTH);
+        sDay = calendar.get(Calendar.DAY_OF_MONTH);
+        sHour = calendar.get(Calendar.HOUR_OF_DAY);
+        sMin = calendar.get(Calendar.MINUTE);
+        eHour = sHour;
+        eMin = sMin;
+        //Initialize TextView values
+        currentDate.setText(dateFormat.format(currentTime));
+        startingTime.setText(timeFormat.format(currentTime));
+        endingTime.setText(timeFormat.format(currentTime));
     }
 }

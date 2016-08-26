@@ -3,112 +3,132 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.android.mycalendar.AddingEvent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Stating Time"
-        android:id="@+id/startingTimeText"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/date"
-        android:layout_alignParentStart="true" />
+        android:padding="10dp"
+        android:stretchColumns="1">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Ending Time"
-        android:id="@+id/endingTimeText"
-        android:layout_below="@+id/startingTimeText"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="29dp" />
+        <TableRow android:paddingBottom="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Activity Name"
-        android:id="@+id/activityNameText"
-        android:layout_below="@+id/endingTimeText"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="29dp" />
+            <TextView
+                android:id="@+id/userNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_name"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </TableRow>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="User Name"
-        android:id="@+id/userNameText"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        <TableRow android:paddingBottom="5dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Cur Starting Time"
-        android:id="@+id/startingTime"
-        android:layout_above="@+id/endingTimeText"
-        android:layout_alignStart="@+id/date" />
+            <TextView
+                android:id="@+id/dateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/current_date"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Cur Ending Time"
-        android:id="@+id/endingTime"
-        android:layout_alignTop="@+id/endingTimeText"
-        android:layout_alignStart="@+id/startingTime" />
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="@string/current_date"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </TableRow>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Date"
-        android:id="@+id/dateText"
-        android:layout_marginTop="44dp"
-        android:layout_below="@+id/userNameText"
-        android:layout_alignParentStart="true" />
+        <TableRow android:paddingBottom="5dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Cur Date"
-        android:id="@+id/date"
-        android:layout_alignTop="@+id/dateText"
-        android:layout_toEndOf="@+id/activityNameText" />
+            <TextView
+                android:id="@+id/startingTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/starting_time"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Activity"
-        android:id="@+id/activity"
-        android:layout_alignTop="@+id/activityNameText"
-        android:layout_toEndOf="@+id/date" />
+            <TextView
+                android:id="@+id/startingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="@string/starting_time"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </TableRow>
 
-    <Button
-        android:layout_width="wrap_content"
+        <TableRow android:paddingBottom="5dp">
+
+            <TextView
+                android:id="@+id/endingTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ending_time"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/endingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="@string/ending_time"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </TableRow>
+
+        <TableRow android:paddingBottom="5dp">
+
+            <TextView
+                android:id="@+id/activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/activityNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="@string/activity"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OK"
-        android:id="@+id/submit"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/activityNameText"
-        android:layout_marginBottom="48dp" />
+        android:layout_centerHorizontal="true"
+        >
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clear"
-        android:id="@+id/clear"
-        android:layout_alignTop="@+id/submit"
-        android:layout_alignEnd="@+id/activity" />
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ok"
+            android:layout_weight="1"
+            android:textAllCaps="true"/>
 
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clear"
+            android:layout_weight="1"
+            android:textAllCaps="true"/>
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:layout_weight="1"
+            android:textAllCaps="true"/>
+    </LinearLayout>
 </RelativeLayout>

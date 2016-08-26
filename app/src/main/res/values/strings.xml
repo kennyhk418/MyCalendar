@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MyCalendar</string>
+    <string name="current_date">Current Date</string>
+    <string name="starting_time">Starting Time</string>
+    <string name="ending_time">Ending Time</string>
+    <string name="user_name">User Name</string>
+    <string name="ok">OK</string>
+    <string name="clear">Clear</string>
+    <string name="cancel">Cancel</string>
+    <string name="activity">Activity</string>
 </resources>
