@@ -17,10 +17,11 @@ import java.util.List;
 
 public class MyCalendar extends AppCompatActivity {
     static final int REQUEST_CODE = 0;
-    static int eventID = 0;
+    static long eventID = 0;
     List<WeekViewEvent> mainEvents = new ArrayList<WeekViewEvent>();
     int sYear, sMonth, sDay, sHour, sMin; //Starting Date
     int eHour, eMin; //Ending Date
+    String activity;
     boolean isDatePassed = false;
 
     private List<WeekViewEvent> getEvents(int year, int month) {
@@ -50,12 +51,23 @@ public class MyCalendar extends AppCompatActivity {
         mWeekView.setOnEventClickListener(new WeekView.EventClickListener() {
             @Override
             public void onEventClick(WeekViewEvent event, RectF eventRect) {
-                //Log.v("Event Clicked", "Event - " + event.getStartTime() +" " + event.getEndTime());
                 Calendar startingTime = event.getStartTime();
                 Calendar endingTime = event.getEndTime();
-                String eventName = event.getName();
+                int year, month, day, shour, smin, ehour,emin;
+                year = startingTime.get(Calendar.YEAR);
+                month = startingTime.get(Calendar.MONTH);
+                day = startingTime.get(Calendar.DAY_OF_MONTH);
+                shour = startingTime.get(Calendar.HOUR_OF_DAY);
+                smin = startingTime.get(Calendar.MINUTE);
+                ehour = endingTime.get(Calendar.HOUR_OF_DAY);
+                emin = endingTime.get(Calendar.MINUTE);
+                String activity = event.getName();
                 long eventID = event.getId();
-
+                Intent showingEvent = new Intent(MyCalendar.this, ShowingEvent.class);
+                showingEvent.putExtra("year",year).putExtra("month",month).putExtra("day",day)
+                        .putExtra("shour",shour).putExtra("smin",smin).putExtra("ehour",ehour)
+                        .putExtra("emin",emin).putExtra("activity",activity).putExtra("eventID",eventID);
+                startActivity(showingEvent);
             }
         });
 
@@ -100,6 +112,7 @@ public class MyCalendar extends AppCompatActivity {
         //When user comes back from the AddingEvent page, put the event into the calendar
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // So it successfully passes the data from the intent to the mainactivity
+            activity = data.getStringExtra("activity");
             sYear = data.getIntExtra("sYear", -1);
             sMonth = data.getIntExtra("sMonth", -1);
             sDay = data.getIntExtra("sDay", -1);
@@ -122,7 +135,7 @@ public class MyCalendar extends AppCompatActivity {
                 startingTime.set(Calendar.MINUTE, sMin);
                 endingTime.set(Calendar.HOUR_OF_DAY, eHour);
                 endingTime.set(Calendar.MINUTE, eMin);
-                WeekViewEvent newEvent = new WeekViewEvent(eventID, "Great", startingTime, endingTime);
+                WeekViewEvent newEvent = new WeekViewEvent(eventID, activity, startingTime, endingTime);
                 eventID++;
                 Toast.makeText(MyCalendar.this, "Successfully Added An Event", Toast.LENGTH_SHORT).show();
                 mainEvents.add(newEvent);

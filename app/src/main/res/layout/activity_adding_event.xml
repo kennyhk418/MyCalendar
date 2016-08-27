@@ -16,8 +16,13 @@
         android:padding="10dp"
         android:stretchColumns="1">
 
-        <TableRow android:paddingBottom="20dp">
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:hint="@string/activity"
+            android:id="@+id/activity"/>
 
+        <TableRow android:paddingBottom="20dp">
             <TextView
                 android:id="@+id/userNameText"
                 android:layout_width="wrap_content"
@@ -80,23 +85,6 @@
                 android:textAppearance="?android:attr/textAppearanceLarge" />
         </TableRow>
 
-        <TableRow android:paddingBottom="5dp">
-
-            <TextView
-                android:id="@+id/activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/activity"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <TextView
-                android:id="@+id/activityNameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:text="@string/activity"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-        </TableRow>
     </TableLayout>
 
     <LinearLayout

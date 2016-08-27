@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -21,7 +22,8 @@ public class AddingEvent extends AppCompatActivity {
     Calendar calendar = Calendar.getInstance();
     Date currentTime, sTime, eTime;
     Button okButton, clearButton, cancelButton;
-    TextView currentDate, startingTime, endingTime, activity;
+    TextView currentDate, startingTime, endingTime;
+    EditText activity;
     int sYear, sMonth, sDay;
     int sHour, sMin;
     int eHour, eMin;
@@ -41,7 +43,7 @@ public class AddingEvent extends AppCompatActivity {
         okButton = (Button) findViewById(R.id.submit);
         clearButton = (Button) findViewById(R.id.clear);
         cancelButton = (Button) findViewById(R.id.cancel);
-
+        activity = (EditText) findViewById(R.id.activity);
         initializeVariables(); // initialize all the variables when it first creates
 
         //Click on the "Current Date" TextView to choose the desired date of an event
@@ -118,7 +120,8 @@ public class AddingEvent extends AppCompatActivity {
                             , Toast.LENGTH_SHORT).show();
                 } else {
                     isDatePassed = true;
-                    setResult(Activity.RESULT_OK, new Intent().putExtra("sYear", sYear)
+                    String activityName = activity.getText().toString();
+                    setResult(Activity.RESULT_OK, new Intent().putExtra("activity",activityName).putExtra("sYear", sYear)
                             .putExtra("sMonth", sMonth).putExtra("sDay", sDay).putExtra("sHour", sHour)
                             .putExtra("sMin", sMin).putExtra("eHour", eHour).putExtra("eMin", eMin)
                             .putExtra("isDatePassed", isDatePassed));
