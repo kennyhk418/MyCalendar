@@ -45,7 +45,7 @@ public class MyCalendar extends AppCompatActivity {
         final WeekView mWeekView = (WeekView) findViewById(R.id.weekView);
 
         mWeekView.goToToday();
-        mWeekView.goToHour(12);
+        mWeekView.goToHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
 
         // Set an action when any event is clicked.
         mWeekView.setOnEventClickListener(new WeekView.EventClickListener() {

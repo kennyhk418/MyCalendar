@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class ShowingEvent extends AppCompatActivity {
@@ -43,18 +42,13 @@ public class ShowingEvent extends AppCompatActivity {
         eventID = intent.getIntExtra("eventID",-1);
         activity = intent.getStringExtra("activity");
 
-        Calendar sTime = Calendar.getInstance();
-        Calendar eTime = Calendar.getInstance();
-        sTime.set(Calendar.YEAR,year);
-        sTime.set(Calendar.MONTH,month);
-        sTime.set(Calendar.DAY_OF_MONTH,day);
-        sTime.set(Calendar.HOUR_OF_DAY,shour);
-        sTime.set(Calendar.MINUTE,smin);
-        eTime.set(Calendar.HOUR_OF_DAY,ehour);
-        eTime.set(Calendar.MINUTE,emin);
-        currentDate.setText(dateFormat.format(sTime.getTime()));
-        startingTime.setText(timeFormat.format(sTime.getTime()));
-        endingTime.setText(timeFormat.format(eTime.getTime()));
+        TimeObject startingObj = new TimeObject(year,month,day,shour,smin);
+        TimeObject endingObj = new TimeObject(year,month,day,ehour,emin);
+        startingObj.setCalendar();
+        endingObj.setCalendar();
+        currentDate.setText(dateFormat.format(startingObj.getCalendar().getTime()));
+        startingTime.setText(timeFormat.format(startingObj.getCalendar().getTime()));
+        endingTime.setText(timeFormat.format(endingObj.getCalendar().getTime()));
         eventName.setText(activity);
 
         back.setOnClickListener(new View.OnClickListener() {

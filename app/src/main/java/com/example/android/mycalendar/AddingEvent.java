@@ -54,11 +54,9 @@ public class AddingEvent extends AppCompatActivity {
                 datePicker = new DatePickerDialog(AddingEvent.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        Calendar tempCal = calendar;
-                        tempCal.set(Calendar.YEAR, i);
-                        tempCal.set(Calendar.MONTH, i1);
-                        tempCal.set(Calendar.DAY_OF_MONTH, i2);
-                        currentDate.setText(dateFormat.format(tempCal.getTime()));
+                        TimeObject tempDate = new TimeObject(i,i1,i2);
+                        tempDate.setCalendar();
+                        currentDate.setText(dateFormat.format(tempDate.getCalendar().getTime()));
                         sYear = i;
                         sMonth = i1;
                         sDay = i2;
@@ -76,11 +74,10 @@ public class AddingEvent extends AppCompatActivity {
                 TimePickerDialog timePicker = new TimePickerDialog(AddingEvent.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                        Calendar tempCal = calendar;
-                        tempCal.set(Calendar.HOUR_OF_DAY, i);
-                        tempCal.set(Calendar.MINUTE, i1);
-                        startingTime.setText(timeFormat.format(tempCal.getTime()));
-                        sTime = tempCal.getTime();
+                        TimeObject tempTime = new TimeObject(i,i1);
+                        tempTime.setCalendar();
+                        startingTime.setText(timeFormat.format(tempTime.getCalendar().getTime()));
+                        sTime = tempTime.getCalendar().getTime();
                         sHour = i;
                         sMin = i1;
                     }
@@ -97,11 +94,10 @@ public class AddingEvent extends AppCompatActivity {
                 TimePickerDialog timePicker = new TimePickerDialog(AddingEvent.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                        Calendar tempCal = calendar;
-                        tempCal.set(Calendar.HOUR_OF_DAY, i);
-                        tempCal.set(Calendar.MINUTE, i1);
-                        endingTime.setText(timeFormat.format(tempCal.getTime()));
-                        eTime = tempCal.getTime();
+                        TimeObject tempTime = new TimeObject(i,i1);
+                        tempTime.setCalendar();
+                        endingTime.setText(timeFormat.format(tempTime.getCalendar().getTime()));
+                        eTime = tempTime.getCalendar().getTime();
                         eHour = i;
                         eMin = i1;
                     }
