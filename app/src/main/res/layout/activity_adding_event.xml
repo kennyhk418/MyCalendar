@@ -17,12 +17,13 @@
         android:stretchColumns="1">
 
         <EditText
-            android:layout_height="wrap_content"
+            android:id="@+id/activity"
             android:layout_width="match_parent"
-            android:hint="@string/activity"
-            android:id="@+id/activity"/>
+            android:layout_height="wrap_content"
+            android:hint="@string/activity" />
 
         <TableRow android:paddingBottom="20dp">
+
             <TextView
                 android:id="@+id/userNameText"
                 android:layout_width="wrap_content"
@@ -86,37 +87,4 @@
         </TableRow>
 
     </TableLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        >
-
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ok"
-            android:layout_weight="1"
-            android:textAllCaps="true"/>
-
-        <Button
-            android:id="@+id/clear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/clear"
-            android:layout_weight="1"
-            android:textAllCaps="true"/>
-
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel"
-            android:layout_weight="1"
-            android:textAllCaps="true"/>
-    </LinearLayout>
 </RelativeLayout>

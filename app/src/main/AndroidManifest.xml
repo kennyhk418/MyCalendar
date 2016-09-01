@@ -15,9 +15,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddingEvent" />
+        <activity android:name=".AddingEvent">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.mycalendar.MyCalendar" />
+        </activity>
         <activity android:name=".MyCalendar" />
-        <activity android:name=".ShowingEvent"></activity>
+        <activity android:name=".ShowingEvent">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.mycalendar.MyCalendar" />
+        </activity>
     </application>
 
 </manifest>

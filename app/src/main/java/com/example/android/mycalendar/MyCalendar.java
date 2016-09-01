@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.alamkanak.weekview.MonthLoader;
@@ -14,15 +15,17 @@ import com.alamkanak.weekview.WeekViewEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.ListIterator;
 
 public class MyCalendar extends AppCompatActivity {
-    static final int REQUEST_CODE = 0;
+    static final int addingEventCode = 0;
+    static final int removeEventCode = 1;
     static long eventID = 0;
     List<WeekViewEvent> mainEvents = new ArrayList<WeekViewEvent>();
     int sYear, sMonth, sDay, sHour, sMin; //Starting Date
     int eHour, eMin; //Ending Date
     String activity;
-    boolean isDatePassed = false;
+
 
     private List<WeekViewEvent> getEvents(int year, int month) {
         List<WeekViewEvent> tempList = new ArrayList<>();
@@ -40,7 +43,6 @@ public class MyCalendar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-
         // Get a reference for the week view in the layout.
         final WeekView mWeekView = (WeekView) findViewById(R.id.weekView);
 
@@ -53,7 +55,7 @@ public class MyCalendar extends AppCompatActivity {
             public void onEventClick(WeekViewEvent event, RectF eventRect) {
                 Calendar startingTime = event.getStartTime();
                 Calendar endingTime = event.getEndTime();
-                int year, month, day, shour, smin, ehour,emin;
+                int year, month, day, shour, smin, ehour, emin;
                 year = startingTime.get(Calendar.YEAR);
                 month = startingTime.get(Calendar.MONTH);
                 day = startingTime.get(Calendar.DAY_OF_MONTH);
@@ -64,23 +66,19 @@ public class MyCalendar extends AppCompatActivity {
                 String activity = event.getName();
                 long eventID = event.getId();
                 Intent showingEvent = new Intent(MyCalendar.this, ShowingEvent.class);
-                showingEvent.putExtra("year",year).putExtra("month",month).putExtra("day",day)
-                        .putExtra("shour",shour).putExtra("smin",smin).putExtra("ehour",ehour)
-                        .putExtra("emin",emin).putExtra("activity",activity).putExtra("eventID",eventID);
-                startActivity(showingEvent);
+                showingEvent.putExtra("year", year).putExtra("month", month).putExtra("day", day)
+                        .putExtra("shour", shour).putExtra("smin", smin).putExtra("ehour", ehour)
+                        .putExtra("emin", emin).putExtra("activity", activity).putExtra("eventID", eventID);
+                startActivityForResult(showingEvent, removeEventCode);
             }
         });
 
+        //Show the calendar view on the screen
         final MonthLoader.MonthChangeListener mMonthChangeListener = new MonthLoader.MonthChangeListener() {
             @Override
             public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
                 // Populate the week view with some events.
                 List<WeekViewEvent> events = getEvents(newYear, newMonth);
-                /*java.util.Calendar startTime = java.util.Calendar.getInstance();
-                java.util.Calendar endTime = (java.util.Calendar) startTime.clone();
-                endTime.add(java.util.Calendar.HOUR, 1);
-                WeekViewEvent newEvent = new WeekViewEvent(1, "New Event", startTime, endTime);
-                mainEvents.add(newEvent);*/
                 return events;
             }
         };
@@ -93,7 +91,7 @@ public class MyCalendar extends AppCompatActivity {
         mWeekView.setEventLongPressListener(new WeekView.EventLongPressListener() {
             @Override
             public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-
+                //Do Nothing
             }
         });
 
@@ -101,16 +99,22 @@ public class MyCalendar extends AppCompatActivity {
             //When the user click on an empty event, it will proceed to an AddingEvent Page
             @Override
             public void onEmptyViewClicked(java.util.Calendar time) {
+                //Start AddingEvent class when there is an empty spot
                 Intent addingEvent = new Intent(MyCalendar.this, AddingEvent.class);
-                startActivityForResult(addingEvent, REQUEST_CODE);
+                addingEvent.putExtra("currentTime",(Integer)time.get(Calendar.HOUR_OF_DAY));
+                addingEvent.putExtra("eventID", eventID);
+                startActivityForResult(addingEvent, addingEventCode);
             }
         });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Get a reference for the week view in the layout.
+        final WeekView mWeekView = (WeekView) findViewById(R.id.weekView);
+
         //When user comes back from the AddingEvent page, put the event into the calendar
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == addingEventCode && resultCode == Activity.RESULT_OK) {
             // So it successfully passes the data from the intent to the mainactivity
             activity = data.getStringExtra("activity");
             sYear = data.getIntExtra("sYear", -1);
@@ -120,27 +124,29 @@ public class MyCalendar extends AppCompatActivity {
             sMin = data.getIntExtra("sMin", -1);
             eHour = data.getIntExtra("eHour", -1);
             eMin = data.getIntExtra("eMin", -1);
-            isDatePassed = data.getBooleanExtra("isDatePassed", false);
-            if (isDatePassed) {
-                final WeekView mWeekView = (WeekView) findViewById(R.id.weekView);
-                Calendar startingTime = Calendar.getInstance();
-                Calendar endingTime = Calendar.getInstance();
-                startingTime.set(Calendar.YEAR, sYear);
-                startingTime.set(Calendar.MONTH, sMonth);
-                startingTime.set(Calendar.DAY_OF_MONTH, sDay);
-                endingTime.set(Calendar.YEAR, sYear);
-                endingTime.set(Calendar.MONTH, sMonth);
-                endingTime.set(Calendar.DAY_OF_MONTH, sDay);
-                startingTime.set(Calendar.HOUR_OF_DAY, sHour);
-                startingTime.set(Calendar.MINUTE, sMin);
-                endingTime.set(Calendar.HOUR_OF_DAY, eHour);
-                endingTime.set(Calendar.MINUTE, eMin);
-                WeekViewEvent newEvent = new WeekViewEvent(eventID, activity, startingTime, endingTime);
-                eventID++;
-                Toast.makeText(MyCalendar.this, "Successfully Added An Event", Toast.LENGTH_SHORT).show();
-                mainEvents.add(newEvent);
-                mWeekView.notifyDatasetChanged();
+
+            // Save the data from AddingEvent
+            TimeObject startingObj = new TimeObject(sYear, sMonth, sDay, sHour, sMin);
+            TimeObject endingObj = new TimeObject(sYear, sMonth, sDay, eHour, eMin);
+            startingObj.setCalendar();
+            endingObj.setCalendar();
+            WeekViewEvent newEvent = new WeekViewEvent(eventID, activity,
+                    startingObj.getCalendar(), endingObj.getCalendar());
+            eventID++;
+            Toast.makeText(MyCalendar.this, "Successfully Added An Event", Toast.LENGTH_SHORT).show();
+            mainEvents.add(newEvent);
+            mWeekView.notifyDatasetChanged();
+        } else if (requestCode == removeEventCode && resultCode == Activity.RESULT_OK) {
+            long tempID = data.getLongExtra("eventID", -1);
+            ListIterator<WeekViewEvent> listIterator = mainEvents.listIterator();
+            while(listIterator.hasNext()){
+                if (listIterator.next().getId()==tempID) {
+                    listIterator.remove();
+                    Log.wtf("REMOVED","WOOOO");
+                    break;
+                }
             }
+            mWeekView.notifyDatasetChanged();
         }
     }
 }

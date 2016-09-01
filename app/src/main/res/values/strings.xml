@@ -1,5 +1,7 @@
 <resources>
+    <!-->App Name<-->
     <string name="app_name">MyCalendar</string>
+    <!-->Adding Event and Showing Event<-->
     <string name="current_date">Current Date</string>
     <string name="starting_time">Starting Time</string>
     <string name="ending_time">Ending Time</string>
@@ -9,4 +11,6 @@
     <string name="cancel">Cancel</string>
     <string name="back">Back</string>
     <string name="activity">Enter the activity name</string>
+    <string name="delEvent">Delete</string>
+    <string name="saveEvent">Save</string>
 </resources>
